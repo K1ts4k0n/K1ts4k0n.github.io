@@ -149,6 +149,23 @@ body.cyber-theme .bg-gray-300\/10 { background-color: rgba(0, 255, 136, 0.05) !i
 </style>
 </head>
 <body class="bg-web3-darker text-gray-100 font-space overflow-x-hidden drag-select">
+<!-- Music Player -->
+<div id="music-player" class="fixed bottom-8 right-8 z-50">
+<button id="music-toggle" class="relative group">
+<!-- Glow Effect -->
+<div class="absolute -inset-4 bg-gradient-to-r from-purple-600 via-pink-500 to-cyan-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 animate-pulse"></div>
+<!-- Button -->
+<div class="relative w-16 h-16 bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl shadow-purple-500/50 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 cursor-pointer">
+<i id="music-icon" class="fas fa-play text-white text-xl"></i>
+</div>
+<!-- Animated Rings -->
+<div id="music-rings" class="hidden absolute inset-0 rounded-full border-2 border-cyan-500 animate-ping"></div>
+</button>
+<!-- Audio Element -->
+<audio id="background-music" loop>
+<source src="Where have you been  - Tiktok Remix (For Edits).mp3" type="audio/mpeg">
+</audio>
+</div>
 <!-- Scroll Progress Bar -->
 <div class="scroll-indicator" id="scroll-progress"></div>
 <!-- Mouse Trail Container -->
@@ -865,6 +882,31 @@ addEventListener('resize', () => {
 
 // ===== YEAR =====
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// ===== MUSIC PLAYER =====
+const musicToggle = document.getElementById('music-toggle');
+const musicIcon = document.getElementById('music-icon');
+const musicRings = document.getElementById('music-rings');
+const backgroundMusic = document.getElementById('background-music');
+let isPlaying = false;
+
+musicToggle.addEventListener('click', () => {
+  if (isPlaying) {
+    // หยุดเพลง
+    backgroundMusic.pause();
+    musicIcon.classList.remove('fa-pause');
+    musicIcon.classList.add('fa-play');
+    musicRings.classList.add('hidden');
+    isPlaying = false;
+  } else {
+    // เล่นเพลง
+    backgroundMusic.play();
+    musicIcon.classList.remove('fa-play');
+    musicIcon.classList.add('fa-pause');
+    musicRings.classList.remove('hidden');
+    isPlaying = true;
+  }
+});
 
 
 
