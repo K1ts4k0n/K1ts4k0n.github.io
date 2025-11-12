@@ -100,6 +100,52 @@ a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/
 .mouse-trail-4{background:radial-gradient(circle,rgba(236,72,153,0.8),transparent);box-shadow:0 0 20px rgba(236,72,153,0.6)}
 .mouse-trail-5{background:radial-gradient(circle,rgba(251,146,60,0.8),transparent);box-shadow:0 0 20px rgba(251,146,60,0.6)}
 .mouse-trail-6{background:radial-gradient(circle,rgba(34,197,94,0.8),transparent);box-shadow:0 0 20px rgba(34,197,94,0.6)}
+
+/* ===== CYBER THEME (Alternative Theme) ===== */
+body.cyber-theme {
+  background: #0a0e27 !important;
+}
+body.cyber-theme .bg-web3-darker {
+  background: #0a0e27 !important;
+}
+body.cyber-theme .gradient-text {
+  background: linear-gradient(135deg, #00f5ff, #ff00ff, #00ff88) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+body.cyber-theme .glass-effect {
+  background: rgba(10, 14, 39, 0.7) !important;
+  border: 1px solid rgba(0, 245, 255, 0.3) !important;
+}
+body.cyber-theme .glass-effect:hover {
+  background: rgba(10, 14, 39, 0.9) !important;
+  border-color: rgba(0, 245, 255, 0.6) !important;
+}
+body.cyber-theme .neon-glow {
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3) !important;
+}
+body.cyber-theme .scroll-indicator {
+  background: linear-gradient(90deg, #00f5ff, #ff00ff, #00ff88, #ffff00) !important;
+}
+body.cyber-theme .text-web3-purple { color: #00f5ff !important; }
+body.cyber-theme .text-web3-blue { color: #ff00ff !important; }
+body.cyber-theme .text-web3-cyan { color: #00ff88 !important; }
+body.cyber-theme .text-web3-pink { color: #ff0080 !important; }
+body.cyber-theme .bg-gradient-to-r {
+  background: linear-gradient(90deg, #00f5ff, #ff00ff) !important;
+}
+body.cyber-theme .border-web3-purple\/30 { border-color: rgba(0, 245, 255, 0.3) !important; }
+body.cyber-theme .border-web3-blue\/30 { border-color: rgba(255, 0, 255, 0.3) !important; }
+body.cyber-theme .border-web3-cyan\/30 { border-color: rgba(0, 255, 136, 0.3) !important; }
+body.cyber-theme .border-web3-pink\/30 { border-color: rgba(255, 0, 128, 0.3) !important; }
+body.cyber-theme .bg-web3-purple\/20 { background-color: rgba(0, 245, 255, 0.2) !important; }
+body.cyber-theme .bg-web3-blue\/20 { background-color: rgba(255, 0, 255, 0.2) !important; }
+body.cyber-theme .bg-web3-cyan\/20 { background-color: rgba(0, 255, 136, 0.2) !important; }
+body.cyber-theme .hover\:shadow-web3-purple\/50:hover { box-shadow: 0 0 30px rgba(0, 245, 255, 0.5) !important; }
+body.cyber-theme .bg-gray-500\/20 { background-color: rgba(0, 245, 255, 0.1) !important; }
+body.cyber-theme .bg-gray-400\/20 { background-color: rgba(255, 0, 255, 0.1) !important; }
+body.cyber-theme .bg-gray-300\/10 { background-color: rgba(0, 255, 136, 0.05) !important; }
 </style>
 </head>
 <body class="bg-web3-darker text-gray-100 font-space overflow-x-hidden drag-select">
@@ -130,7 +176,9 @@ a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/
 <li><a href="#projects" class="hover:text-web3-pink transition-colors">Projects</a></li>
 <li><a href="#contact" class="hover:text-web3-purple transition-colors">Contact</a></li>
 </ul>
-<a href="mailto:artkung.dev@gmail.com" class="px-6 py-2 bg-gradient-to-r from-web3-purple to-web3-blue rounded-lg font-semibold hover:shadow-lg hover:shadow-web3-purple/50 transition-all">Say Hi</a>
+<button id="theme-toggle" class="px-6 py-2 bg-gradient-to-r from-web3-purple to-web3-blue rounded-lg font-semibold hover:shadow-lg hover:shadow-web3-purple/50 transition-all">
+<i class="fas fa-palette mr-2"></i>เปลี่ยนธีม
+</button>
 </div>
 </div>
 </nav>
@@ -777,6 +825,38 @@ document.addEventListener('keydown', (e) => {
 // setInterval(() => {
 //   nextBtn.click();
 // }, 5000);
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'cyber') {
+  body.classList.add('cyber-theme');
+}
+
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('cyber-theme');
+  
+  // Save theme preference
+  if (body.classList.contains('cyber-theme')) {
+    localStorage.setItem('theme', 'cyber');
+  } else {
+    localStorage.setItem('theme', 'default');
+  }
+  
+  // Add ripple effect
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple';
+  ripple.style.left = event.clientX - 50 + 'px';
+  ripple.style.top = event.clientY - 50 + 'px';
+  ripple.style.width = '100px';
+  ripple.style.height = '100px';
+  ripple.style.background = body.classList.contains('cyber-theme') ? 'rgba(0,245,255,0.4)' : 'rgba(156,163,175,0.4)';
+  document.body.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+});
 
 // ===== PROJECT CARDS CLICK =====
 document.addEventListener('DOMContentLoaded', () => {
