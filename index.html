@@ -223,14 +223,13 @@ a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/
 <div class="w-24 h-1 bg-gradient-to-r from-web3-purple via-web3-blue to-web3-cyan mx-auto rounded-full"></div>
 </div>
 <div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="relative flex justify-center items-center">
 <div class="relative">
-<div class="relative w-80 h-80 mx-auto">
-<!-- Animated gradient ring -->
-<div class="absolute inset-0 rounded-full bg-gradient-to-br from-web3-purple via-web3-blue to-web3-cyan opacity-30 animate-pulse blur-xl"></div>
-<div class="absolute inset-0 rounded-full bg-gradient-to-tr from-web3-cyan via-web3-purple to-web3-blue opacity-20 animate-spin" style="animation-duration: 8s;"></div>
+<!-- Animated gradient background -->
+<div class="absolute -inset-4 bg-gradient-to-br from-web3-purple via-web3-blue to-web3-cyan opacity-20 animate-pulse blur-2xl rounded-2xl"></div>
 <!-- Image container -->
-<div class="relative w-full h-full rounded-full glass-effect border-4 border-web3-purple/30 overflow-hidden neon-glow">
-<img src="Screenshot 2025-01-07 031857.png" alt="Artkung Profile" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
+<div class="relative glass-effect rounded-2xl border-4 border-web3-purple/30 overflow-hidden neon-glow shadow-2xl">
+<img src="Screenshot 2025-01-07 031857.png" alt="Artkung Profile" class="max-w-full h-auto hover:scale-105 transition-transform duration-500"/>
 </div>
 <!-- Floating badges -->
 <div class="absolute -top-4 -right-4 glass-effect px-4 py-2 rounded-full border border-web3-cyan/50 animate-float shadow-lg shadow-web3-cyan/30">
@@ -239,7 +238,7 @@ a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/
 <div class="absolute -bottom-4 -left-4 glass-effect px-4 py-2 rounded-full border border-web3-purple/50 animate-float shadow-lg shadow-web3-purple/30" style="animation-delay:1s">
 <i class="fas fa-rocket text-web3-purple mr-2"></i><span class="font-mono text-sm">DeFi</span>
 </div>
-<div class="absolute top-1/2 -right-8 glass-effect px-4 py-2 rounded-full border border-web3-blue/50 animate-float shadow-lg shadow-web3-blue/30" style="animation-delay:0.5s">
+<div class="absolute top-1/2 -right-8 glass-effect px-4 py-2 rounded-full border border-web3-blue/50 animate-float shadow-lg shadow-web3-blue/30" style="animation-delay:0.5s; transform: translateY(-50%);">
 <i class="fas fa-ethereum text-web3-blue mr-2"></i><span class="font-mono text-sm">ETH</span>
 </div>
 </div>
