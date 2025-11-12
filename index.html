@@ -205,8 +205,11 @@ IT Section 3
 <a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://github.com/K1ts4k0n" target="_blank" rel="noreferrer">
 <i class="fab fa-github text-web3-purple"></i>
 </a>
-<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://www.linkedin.com/in/artkung" target="_blank" rel="noreferrer">
-<i class="fab fa-linkedin text-web3-cyan"></i>
+<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://www.instagram.com/art_du_de/" target="_blank" rel="noreferrer">
+<i class="fab fa-instagram text-web3-pink"></i>
+</a>
+<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://guns.lol/givekisswithyou" target="_blank" rel="noreferrer">
+<i class="fas fa-link text-web3-cyan"></i>
 </a>
 <a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="mailto:artkung.dev@gmail.com">
 <i class="fas fa-envelope text-web3-blue"></i>
@@ -402,15 +405,15 @@ View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transit
 </div>
 <!-- Project 4 -->
 <div class="glass-effect p-6 rounded-2xl border border-web3-pink/30 hover:border-web3-pink/60 transition-all tilt-card cyber-border group">
-<div class="text-4xl mb-4">🎨</div>
-<h3 class="text-2xl font-bold text-web3-pink mb-3">ชื่อโปรเจกต์ 4</h3>
-<p class="text-gray-400 mb-4">คำอธิบายโปรเจกต์ของคุณที่นี่</p>
+<div class="text-4xl mb-4">⚖️</div>
+<h3 class="text-2xl font-bold text-web3-pink mb-3">BMI Calculator</h3>
+<p class="text-gray-400 mb-4">เครื่องคำนวณดัชนีมวลกาย (BMI) พร้อมแสดงผลและคำแนะนำสุขภาพ</p>
 <div class="flex flex-wrap gap-2 mb-4">
-<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Python</span>
-<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Flask</span>
-<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">MySQL</span>
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Calculator</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Health</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">Web App</span>
 </div>
-<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+<a href="https://github.com/K1ts4k0n/BMI" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors"></a>
 View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
 </a>
 </div>
@@ -526,8 +529,11 @@ View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transit
 <a href="https://github.com/K1ts4k0n" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-purple/30 hover:border-web3-purple hover:scale-110 transition-all">
 <i class="fab fa-github text-2xl text-gray-400 group-hover:text-web3-purple transition-colors"></i>
 </a>
-<a href="https://www.linkedin.com/in/artkung" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-blue/30 hover:border-web3-blue hover:scale-110 transition-all">
-<i class="fab fa-linkedin text-2xl text-gray-400 group-hover:text-web3-blue transition-colors"></i>
+<a href="https://www.instagram.com/art_du_de/" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-pink/30 hover:border-web3-pink hover:scale-110 transition-all">
+<i class="fab fa-instagram text-2xl text-gray-400 group-hover:text-web3-pink transition-colors"></i>
+</a>
+<a href="https://guns.lol/givekisswithyou" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-blue/30 hover:border-web3-blue hover:scale-110 transition-all">
+<i class="fas fa-link text-2xl text-gray-400 group-hover:text-web3-blue transition-colors"></i>
 </a>
 <a href="mailto:artkung.dev@gmail.com" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-cyan/30 hover:border-web3-cyan hover:scale-110 transition-all">
 <i class="fas fa-envelope text-2xl text-gray-400 group-hover:text-web3-cyan transition-colors"></i>
@@ -841,6 +847,30 @@ document.addEventListener('keydown', (e) => {
 // setInterval(() => {
 //   nextBtn.click();
 // }, 5000);
+
+// ===== PROJECT CARDS CLICK =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Make project cards clickable
+  const projectLinks = {
+    'Car Rent System': 'https://github.com/K1ts4k0n/carrent',
+    'Cat Project': 'https://github.com/K1ts4k0n/cat',
+    'Webtoon Platform': 'https://github.com/K1ts4k0n/Webtoon',
+    'BMI Calculator': 'https://github.com/K1ts4k0n/BMI'
+  };
+  
+  document.querySelectorAll('.glass-effect').forEach(card => {
+    const title = card.querySelector('h3');
+    if (title && projectLinks[title.textContent.trim()]) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', (e) => {
+        // Don't trigger if clicking on the "View Project" link
+        if (!e.target.closest('a')) {
+          window.open(projectLinks[title.textContent.trim()], '_blank');
+        }
+      });
+    }
+  });
+});
 </script>
 </body>
 </html>
