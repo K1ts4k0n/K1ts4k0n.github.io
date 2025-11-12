@@ -1,446 +1,692 @@
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Artkung (K1ts4k0n) — Web3 Developer</title>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <script>
-    tailwind.config = {
-      theme:{
-        extend:{
-          colors:{
-            // === Gray theme ===
-            graphite:'#0c0d0f',
-            graphite2:'#121317',
-            silver:'#e5e7eb',
-            zinc:'#a1a1aa',
-            slate:'#6b7280',
-            line:'#1f242c'
-          },
-          fontFamily:{space:['Space Grotesk','sans-serif'], mono:['JetBrains Mono','monospace']},
-          animation:{
-            float:'float 6s ease-in-out infinite',
-            slide:'slide .5s ease-out',
-            glow:'glow 2s ease-in-out infinite alternate'
-          },
-          keyframes:{
-            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-14px)'}},
-            slide:{from:{opacity:0,transform:'translateY(24px)'},to:{opacity:1,transform:'translateY(0)'}},
-            glow:{from:{boxShadow:'0 0 20px rgba(229,231,235,.15)'},
-                  to:{boxShadow:'0 0 40px rgba(229,231,235,.25)'}}
-          }
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Artkung (K1ts4k0n) — Web3 Developer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'web3-purple': '#6B7280',
+        'web3-blue': '#9CA3AF',
+        'web3-cyan': '#D1D5DB',
+        'web3-pink': '#4B5563',
+        'web3-dark': '#1F2937',
+        'web3-darker': '#111827',
+      },
+      fontFamily: {
+        space: ['Space Grotesk', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      animation: {
+        gradient: 'gradient 8s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 2s ease-in-out infinite alternate',
+        'slide-up': 'slideUp 0.5s ease-out',
+      },
+      keyframes: {
+        gradient: {
+          '0%,100%': {'background-size':'200% 200%','background-position':'left center'},
+          '50%': {'background-size':'200% 200%','background-position':'right center'},
+        },
+        float: {
+          '0%,100%': {transform:'translateY(0px)'},
+          '50%': {transform:'translateY(-20px)'}
+        },
+        glow: {
+          from:{boxShadow:'0 0 20px rgba(156,163,175,.5)'},
+          to:{boxShadow:'0 0 30px rgba(156,163,175,.8), 0 0 40px rgba(209,213,219,.5)'}
+        },
+        slideUp: {
+          from:{opacity:0, transform:'translateY(30px)'},
+          to:{opacity:1, transform:'translateY(0)'}
+        },
       }
     }
-  </script>
-
-  <style>
-    :root{
-      --bg:#0b0d10; --bg2:#0f1216;
-      --accent1:#d1d5db; /* gray-300 */
-      --accent2:#9ca3af; /* gray-400 */
-      --accent3:#6b7280; /* gray-500 */
-    }
-    body{font-family:'Space Grotesk',sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2));color:#e5e7eb}
-    a{text-decoration:none}
-    .glass{background:rgba(18,19,23,.72);backdrop-filter:blur(10px);border:1px solid #1f242c}
-    .ring-line{position:relative}
-    .ring-line::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:linear-gradient(90deg,var(--accent1),var(--accent3));transition:width .3s}
-    .ring-line:hover::after{width:100%}
-    .gradient-text{
-      background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3));
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-      background-size:200% 200%; animation:shift 3s ease infinite;
-    }
-    @keyframes shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    .tilt{transform-style:preserve-3d;transition:transform .12s ease-out}
-    .tilt:hover{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.02)}
-    /* canvases */
-    #matrix,#particles,#drag{position:fixed;inset:0;pointer-events:none}
-    #matrix{opacity:.12;z-index:0}
-    #particles{z-index:1}
-    #drag{z-index:2}
-  </style>
+  }
+}
+</script>
+<style>
+body{font-family:'Space Grotesk',sans-serif;cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="rgba(139,92,246,0.3)" stroke="rgba(236,72,153,0.8)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="rgba(59,130,246,0.6)"/></svg>') 12 12, auto}
+a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="rgba(6,182,212,0.4)" stroke="rgba(251,146,60,0.9)" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="rgba(236,72,153,0.8)"/></svg>') 12 12, pointer}
+.gradient-text{background:linear-gradient(135deg,#9CA3AF,#D1D5DB,#F3F4F6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 3s ease infinite;background-size:200% 200%}
+@keyframes gradient-shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.gradient-border{position:relative;background:linear-gradient(135deg,rgba(156,163,175,.1),rgba(209,213,219,.1));border:1px solid transparent}
+.gradient-border::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,#9CA3AF,#D1D5DB,#F3F4F6);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.glass-effect{background:rgba(31,41,55,.7);backdrop-filter:blur(10px);border:1px solid rgba(156,163,175,.2);transition:all 0.3s ease}
+.glass-effect:hover{background:rgba(31,41,55,.85);border-color:rgba(209,213,219,.4);transform:translateY(-2px)}
+.neon-glow{box-shadow:0 0 20px rgba(156,163,175,.3),0 0 40px rgba(107,114,128,.2);animation:neon-pulse 2s ease-in-out infinite}
+@keyframes neon-pulse{0%,100%{box-shadow:0 0 20px rgba(156,163,175,.3),0 0 40px rgba(107,114,128,.2)}50%{box-shadow:0 0 30px rgba(156,163,175,.5),0 0 60px rgba(107,114,128,.3),0 0 80px rgba(209,213,219,.2)}}
+.grid-pattern{background-image:linear-gradient(rgba(156,163,175,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(156,163,175,.05) 1px,transparent 1px);background-size:50px 50px;animation:grid-move 20s linear infinite}
+@keyframes grid-move{0%{background-position:0 0}100%{background-position:50px 50px}}
+.hexagon{clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+#particles-canvas{position:fixed;inset:0;pointer-events:none;z-index:1}
+#matrix-canvas{position:fixed;inset:0;pointer-events:none;opacity:.1;z-index:0}
+.tilt-card{transform-style:preserve-3d;transition:transform .1s ease-out}
+.tilt-card:hover{transform:perspective(1000px) rotateX(var(--rotate-x,0deg)) rotateY(var(--rotate-y,0deg)) scale(1.02)}
+.glitch{position:relative}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;opacity:.8}
+.glitch::before{animation:glitch-1 2s infinite;color:#9CA3AF;z-index:-1}
+.glitch::after{animation:glitch-2 2s infinite;color:#D1D5DB;z-index:-2}
+@keyframes glitch-1{0%,100%{transform:translate(0)}20%{transform:translate(-2px,2px)}40%{transform:translate(-2px,-2px)}60%{transform:translate(2px,2px)}80%{transform:translate(2px,-2px)}}
+@keyframes glitch-2{0%,100%{transform:translate(0)}20%{transform:translate(2px,-2px)}40%{transform:translate(2px,2px)}60%{transform:translate(-2px,-2px)}80%{transform:translate(-2px,2px)}}
+.scan-line{position:relative;overflow:hidden}
+.scan-line::after{content:'';position:absolute;inset:0;height:2px;background:linear-gradient(90deg,transparent,rgba(156,163,175,.8),transparent);animation:scan 3s linear infinite}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}
+.typing-cursor::after{content:'|';animation:blink 1s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.cyber-border{position:relative}
+.cyber-border::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#6B7280,#9CA3AF,#D1D5DB,#F3F4F6);background-size:400% 400%;border-radius:inherit;z-index:-1;animation:cyber-glow 3s ease infinite;opacity:0;transition:opacity .3s}
+.cyber-border:hover::before{opacity:1}
+@keyframes cyber-glow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.ripple{position:absolute;border-radius:50%;background:rgba(209,213,219,0.4);transform:scale(0);animation:ripple-effect 0.6s ease-out;pointer-events:none}
+@keyframes ripple-effect{to{transform:scale(4);opacity:0}}
+.parallax-layer{transition:transform 0.1s ease-out;will-change:transform}
+.drag-select{user-select:none;-webkit-user-select:none}
+::selection{background:rgba(156,163,175,0.3);color:#F3F4F6}
+.scroll-indicator{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#8B5CF6,#3B82F6,#06B6D4,#EC4899,#FB923C,#22C55E);background-size:200% 100%;z-index:100;transition:width 0.1s ease-out;box-shadow:0 0 20px rgba(139,92,246,0.8),0 0 40px rgba(236,72,153,0.5);animation:scroll-gradient 3s linear infinite}
+@keyframes scroll-gradient{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.mouse-trail{position:fixed;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,rgba(209,213,219,0.6),transparent);pointer-events:none;z-index:9999;transition:transform 0.1s ease-out;filter:blur(2px)}
+.mouse-trail-1{background:radial-gradient(circle,rgba(139,92,246,0.8),transparent);box-shadow:0 0 20px rgba(139,92,246,0.6)}
+.mouse-trail-2{background:radial-gradient(circle,rgba(59,130,246,0.8),transparent);box-shadow:0 0 20px rgba(59,130,246,0.6)}
+.mouse-trail-3{background:radial-gradient(circle,rgba(6,182,212,0.8),transparent);box-shadow:0 0 20px rgba(6,182,212,0.6)}
+.mouse-trail-4{background:radial-gradient(circle,rgba(236,72,153,0.8),transparent);box-shadow:0 0 20px rgba(236,72,153,0.6)}
+.mouse-trail-5{background:radial-gradient(circle,rgba(251,146,60,0.8),transparent);box-shadow:0 0 20px rgba(251,146,60,0.6)}
+.mouse-trail-6{background:radial-gradient(circle,rgba(34,197,94,0.8),transparent);box-shadow:0 0 20px rgba(34,197,94,0.6)}
+</style>
 </head>
+<body class="bg-web3-darker text-gray-100 font-space overflow-x-hidden drag-select">
+<!-- Scroll Progress Bar -->
+<div class="scroll-indicator" id="scroll-progress"></div>
+<!-- Mouse Trail Container -->
+<div id="mouse-trail-container"></div>
+<!-- Matrix -->
+<canvas id="matrix-canvas" class="fixed inset-0 pointer-events-none" style="z-index:0"></canvas>
+<!-- Particles -->
+<canvas id="particles-canvas" class="fixed inset-0 pointer-events-none" style="z-index:1"></canvas>
+<div class="scan-line fixed inset-0 pointer-events-none z-10"></div>
+<div class="fixed inset-0 grid-pattern opacity-30 pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-gradient-to-br from-web3-purple/10 via-transparent to-web3-blue/10 pointer-events-none z-0 parallax-layer" data-speed="0.5"></div>
+<!-- Floating Orbs -->
+<div class="fixed top-20 left-10 w-64 h-64 bg-gray-500/20 rounded-full blur-3xl animate-float pointer-events-none z-0 parallax-layer" data-speed="0.3"></div>
+<div class="fixed bottom-20 right-10 w-96 h-96 bg-gray-400/20 rounded-full blur-3xl animate-float pointer-events-none z-0 parallax-layer" data-speed="0.4" style="animation-delay:2s"></div>
+<div class="fixed top-1/2 left-1/2 w-80 h-80 bg-gray-300/10 rounded-full blur-3xl animate-float pointer-events-none z-0 parallax-layer" data-speed="0.6" style="animation-delay:4s"></div>
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 glass-effect border-b border-web3-purple/20">
+<div class="max-w-7xl mx-auto px-6 py-4">
+<div class="flex justify-between items-center">
+<a href="#home" class="logo text-2xl font-bold gradient-text font-mono">&lt;Artkung/&gt;</a>
+<ul class="hidden md:flex space-x-8 font-medium">
+<li><a href="#home" class="hover:text-web3-purple transition-colors">Home</a></li>
+<li><a href="#about" class="hover:text-web3-cyan transition-colors">About</a></li>
+<li><a href="#skills" class="hover:text-web3-blue transition-colors">Skills</a></li>
+<li><a href="#projects" class="hover:text-web3-pink transition-colors">Projects</a></li>
+<li><a href="#contact" class="hover:text-web3-purple transition-colors">Contact</a></li>
+</ul>
+<a href="mailto:artkung.dev@gmail.com" class="px-6 py-2 bg-gradient-to-r from-web3-purple to-web3-blue rounded-lg font-semibold hover:shadow-lg hover:shadow-web3-purple/50 transition-all">Say Hi</a>
+</div>
+</div>
+</nav>
+<!-- HERO -->
+<section id="home" class="relative min-h-screen flex items-center pt-20 z-10">
+<div class="max-w-7xl mx-auto px-6 py-20">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="space-y-6 animate-slide-up relative z-10">
+<div class="inline-block px-4 py-2 glass-effect rounded-full text-sm font-mono text-web3-cyan border border-web3-cyan/30">
+<i class="fas fa-circle text-green-400 text-xs mr-2 animate-pulse"></i>Available for Web3 Projects
+</div>
+<h1 class="text-6xl md:text-7xl font-bold leading-tight glitch" data-text="สวัสดี, ผม Artkung">
+สวัสดี, ผม Artkung
+<span class="gradient-text block mt-2 typing-cursor">Web3 Developer</span>
+</h1>
+<p class="text-xl text-gray-400 leading-relaxed">
+สร้างสรรค์ DApps และ Smart Contracts บน Ethereum/Polygon/BNB — โฟกัส DX ที่ดีและ UX ลื่นไหล 🚀
+</p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a href="#projects" class="group px-8 py-4 bg-gradient-to-r from-web3-purple to-web3-blue rounded-lg font-semibold hover:shadow-2xl hover:shadow-web3-purple/50 transition-all transform hover:-translate-y-1">
+<span class="mr-2">ดูผลงาน</span>
+<i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform inline-block"></i>
+</a>
+<a href="#contact" class="px-8 py-4 glass-effect rounded-lg font-semibold border border-web3-purple/50 hover:border-web3-purple hover:bg-web3-purple/10 transition-all">
+<i class="fas fa-paper-plane mr-2"></i>ติดต่อ
+</a>
+</div>
+<div class="grid grid-cols-3 gap-6 pt-8">
+<div class="text-center">
+<div class="text-3xl font-bold gradient-text">5+</div>
+<div class="text-sm text-gray-500">Years Exp</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold gradient-text">50+</div>
+<div class="text-sm text-gray-500">Projects</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold gradient-text">30+</div>
+<div class="text-sm text-gray-500">Clients</div>
+</div>
+</div>
+</div>
+<!-- Terminal Card -->
+<div class="relative animate-float z-10">
+<div class="absolute -top-10 -left-10 w-32 h-32 bg-gray-500/20 rounded-full blur-3xl animate-pulse"></div>
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-gray-400/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+<div class="relative glass-effect rounded-2xl p-8 neon-glow tilt-card cyber-border">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-web3-purple/30">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+<span class="ml-4 text-sm text-gray-500 font-mono">web3-terminal.sol</span>
+</div>
+<div class="font-mono text-sm space-y-2">
+<div><span class="text-web3-pink">contract</span> <span class="text-web3-cyan">Developer</span> {</div>
+<div class="pl-4"><span class="text-gray-500">// Blockchain Expertise</span></div>
+<div class="pl-4"><span class="text-web3-purple">string</span> name = <span class="text-green-400">"Artkung"</span>;</div>
+<div class="pl-4"><span class="text-web3-purple">string[]</span> skills = [</div>
+<div class="pl-8"><span class="text-green-400">"Solidity"</span>,</div>
+<div class="pl-8"><span class="text-green-400">"Ethers.js"</span>,</div>
+<div class="pl-8"><span class="text-green-400">"Smart Contracts"</span></div>
+<div class="pl-4">];</div>
+<div class="pl-4"><span class="text-web3-pink">function</span> <span class="text-web3-cyan">build</span>() <span class="text-web3-purple">public</span> {</div>
+<div class="pl-8"><span class="text-gray-500">// Building the future 🚀</span></div>
+<div class="pl-8"><span class="text-web3-pink">return</span> <span class="text-green-400">"Decentralized Apps"</span>;</div>
+<div class="pl-4">}</div>
+<div>}</div>
+</div>
+<div class="flex gap-4 mt-8 pt-6 border-t border-web3-purple/30">
+<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://github.com/K1ts4k0n" target="_blank" rel="noreferrer">
+<i class="fab fa-github text-web3-purple"></i>
+</a>
+<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="https://www.linkedin.com/in/artkung" target="_blank" rel="noreferrer">
+<i class="fab fa-linkedin text-web3-cyan"></i>
+</a>
+<a class="w-10 h-10 glass-effect rounded-lg flex items-center justify-center hover:scale-110 transition-transform" href="mailto:artkung.dev@gmail.com">
+<i class="fas fa-envelope text-web3-blue"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ABOUT -->
+<section id="about" class="relative py-32 z-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-5xl font-bold mb-4"><span class="gradient-text">เกี่ยวกับผม</span></h2>
+<div class="w-24 h-1 bg-gradient-to-r from-web3-purple via-web3-blue to-web3-cyan mx-auto rounded-full"></div>
+</div>
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="relative">
+<div class="relative w-80 h-80 mx-auto">
+<div class="absolute inset-0 hexagon bg-gradient-to-br from-web3-purple to-web3-blue opacity-20 animate-pulse"></div>
+<div class="absolute inset-4 hexagon glass-effect flex items-center justify-center overflow-hidden">
+<img src="Screenshot 2025-01-07 031857.png" alt="Artkung Profile" class="w-full h-full object-cover"/>
+</div>
+<div class="absolute -top-4 -right-4 glass-effect px-4 py-2 rounded-full border border-web3-cyan/50 animate-float">
+<i class="fas fa-code text-web3-cyan mr-2"></i><span class="font-mono text-sm">Web3</span>
+</div>
+<div class="absolute -bottom-4 -left-4 glass-effect px-4 py-2 rounded-full border border-web3-purple/50 animate-float" style="animation-delay:1s">
+<i class="fas fa-rocket text-web3-purple mr-2"></i><span class="font-mono text-sm">DeFi</span>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="glass-effect p-8 rounded-2xl border border-web3-purple/30 hover:border-web3-purple/60 transition-all tilt-card cyber-border">
+<h3 class="text-2xl font-bold text-web3-cyan mb-4"><i class="fas fa-cube mr-2 animate-pulse"></i>Blockchain Developer</h3>
+<p class="text-gray-400">ผมเป็น Web3 Developer ที่ชอบสร้าง DApps และ Smart Contracts บน Ethereum/Polygon พร้อมโฟกัสความปลอดภัยและประสิทธิภาพ</p>
+</div>
+<div class="glass-effect p-8 rounded-2xl border border-web3-blue/30 hover:border-web3-blue/60 transition-all tilt-card cyber-border">
+<h3 class="text-2xl font-bold text-web3-blue mb-4"><i class="fas fa-layer-group mr-2 animate-pulse"></i>Full Stack Expertise</h3>
+<p class="text-gray-400">Frontend (React/Next.js) + Backend (Node.js/Solidity) + UI/UX ทันสมัย</p>
+</div>
+<div class="glass-effect p-8 rounded-2xl border border-web3-pink/30 hover:border-web3-pink/60 transition-all tilt-card cyber-border">
+<h3 class="text-2xl font-bold text-web3-pink mb-4"><i class="fas fa-lightbulb mr-2 animate-pulse"></i>Innovation Driven</h3>
+<p class="text-gray-400">สนใจ NFTs, DeFi, DAOs และเทคโนโลยีใหม่ ๆ เพื่อนำไปสร้างคุณค่าจริง</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SKILLS -->
+<section id="skills" class="relative py-32 bg-web3-dark/50 z-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-5xl font-bold mb-4"><span class="gradient-text">ทักษะ & เทคโนโลยี</span></h2>
+<div class="w-24 h-1 bg-gradient-to-r from-web3-purple via-web3-blue to-web3-cyan mx-auto rounded-full"></div>
+<p class="text-gray-400 mt-4">เครื่องมือและเทคโนโลยีที่ใช้ในการสร้าง Web3 Applications</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="glass-effect p-8 rounded-2xl border border-web3-purple/30 hover:border-web3-purple/60 transition-all tilt-card cyber-border">
+<div class="text-4xl mb-4">⛓️</div>
+<h3 class="text-2xl font-bold text-web3-purple mb-4">Blockchain</h3>
+<ul class="space-y-2 text-gray-400">
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Solidity</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Ethereum</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Polygon</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Smart Contracts</li>
+</ul>
+</div>
+<div class="glass-effect p-8 rounded-2xl border border-web3-blue/30 hover:border-web3-blue/60 transition-all tilt-card cyber-border">
+<div class="text-4xl mb-4">💻</div>
+<h3 class="text-2xl font-bold text-web3-blue mb-4">Frontend</h3>
+<ul class="space-y-2 text-gray-400">
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>React/Next.js</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>TypeScript</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Tailwind CSS</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Web3.js/Ethers.js</li>
+</ul>
+</div>
+<div class="glass-effect p-8 rounded-2xl border border-web3-cyan/30 hover:border-web3-cyan/60 transition-all tilt-card cyber-border">
+<div class="text-4xl mb-4">🛠️</div>
+<h3 class="text-2xl font-bold text-web3-cyan mb-4">Tools</h3>
+<ul class="space-y-2 text-gray-400">
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>Hardhat/Truffle</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>IPFS</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>The Graph</li>
+<li><i class="fas fa-check text-web3-cyan mr-2"></i>MetaMask</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+span><!-
+- PROJECTS -->
+<section id="projects" class="relative py-32 z-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-5xl font-bold mb-4"><span class="gradient-text">Featured Projects</span></h2>
+<div class="w-24 h-1 bg-gradient-to-r from-web3-purple via-web3-blue to-web3-cyan mx-auto rounded-full"></div>
+<p class="text-gray-400 mt-4">โปรเจกต์ Web3 และ Blockchain ที่น่าสนใจ</p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="glass-effect p-6 rounded-2xl border border-web3-purple/30 hover:border-web3-purple/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">🎨</div>
+<h3 class="text-2xl font-bold text-web3-purple mb-3">NFT Marketplace</h3>
+<p class="text-gray-400 mb-4">แพลตฟอร์มซื้อขาย NFT บน Polygon พร้อม lazy minting และ royalty system</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Solidity</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">React</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">IPFS</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="glass-effect p-6 rounded-2xl border border-web3-blue/30 hover:border-web3-blue/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">💰</div>
+<h3 class="text-2xl font-bold text-web3-blue mb-3">DeFi Staking</h3>
+<p class="text-gray-400 mb-4">โปรโตคอล staking พร้อม reward distribution และ governance token</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Solidity</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Hardhat</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">Ethers.js</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="glass-effect p-6 rounded-2xl border border-web3-cyan/30 hover:border-web3-cyan/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">🏛️</div>
+<h3 class="text-2xl font-bold text-web3-cyan mb-3">DAO Platform</h3>
+<p class="text-gray-400 mb-4">แพลตฟอร์มสร้าง DAO พร้อมระบบ voting และ treasury management</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Solidity</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Next.js</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">The Graph</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="glass-effect p-6 rounded-2xl border border-web3-pink/30 hover:border-web3-pink/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">🎮</div>
+<h3 class="text-2xl font-bold text-web3-pink mb-3">GameFi Project</h3>
+<p class="text-gray-400 mb-4">เกม blockchain พร้อม play-to-earn mechanics และ in-game NFTs</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Solidity</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Unity</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">Chainlink</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="glass-effect p-6 rounded-2xl border border-web3-purple/30 hover:border-web3-purple/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">🔐</div>
+<h3 class="text-2xl font-bold text-web3-purple mb-3">Multi-Sig Wallet</h3>
+<p class="text-gray-400 mb-4">กระเป๋าเงินแบบ multi-signature พร้อมระบบ approval workflow</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">Solidity</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">React</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">Web3.js</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="glass-effect p-6 rounded-2xl border border-web3-blue/30 hover:border-web3-blue/60 transition-all tilt-card cyber-border group">
+<div class="text-4xl mb-4">📊</div>
+<h3 class="text-2xl font-bold text-web3-blue mb-3">DeFi Dashboard</h3>
+<p class="text-gray-400 mb-4">แดชบอร์ดติดตาม portfolio และ analytics สำหรับ DeFi protocols</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-web3-purple/20 rounded-full text-xs">TypeScript</span>
+<span class="px-3 py-1 bg-web3-blue/20 rounded-full text-xs">Next.js</span>
+<span class="px-3 py-1 bg-web3-cyan/20 rounded-full text-xs">The Graph</span>
+</div>
+<a href="#" class="inline-flex items-center text-web3-cyan hover:text-web3-blue transition-colors">
+View Project <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- CONTACT -->
+<section id="contact" class="relative py-32 bg-web3-dark/50 z-10">
+<div class="max-w-4xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-5xl font-bold mb-4"><span class="gradient-text">Let's Connect</span></h2>
+<div class="w-24 h-1 bg-gradient-to-r from-web3-purple via-web3-blue to-web3-cyan mx-auto rounded-full"></div>
+<p class="text-gray-400 mt-4">สนใจร่วมงานหรือมีโปรเจกต์ Web3 ที่น่าสนใจ? มาคุยกันได้เลย!</p>
+</div>
+<div class="glass-effect p-8 rounded-2xl border border-web3-purple/30 tilt-card cyber-border">
+<form class="space-y-6">
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">ชื่อ</label>
+<input type="text" class="w-full px-4 py-3 bg-web3-darker/50 border border-web3-purple/30 rounded-lg focus:border-web3-cyan focus:outline-none transition-colors" placeholder="ชื่อของคุณ"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">อีเมล</label>
+<input type="email" class="w-full px-4 py-3 bg-web3-darker/50 border border-web3-purple/30 rounded-lg focus:border-web3-cyan focus:outline-none transition-colors" placeholder="email@example.com"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">หัวข้อ</label>
+<input type="text" class="w-full px-4 py-3 bg-web3-darker/50 border border-web3-purple/30 rounded-lg focus:border-web3-cyan focus:outline-none transition-colors" placeholder="เรื่องที่ต้องการติดต่อ"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-400 mb-2">ข้อความ</label>
+<textarea rows="5" class="w-full px-4 py-3 bg-web3-darker/50 border border-web3-purple/30 rounded-lg focus:border-web3-cyan focus:outline-none transition-colors resize-none" placeholder="รายละเอียดโปรเจกต์หรือข้อความที่ต้องการสื่อสาร..."></textarea>
+</div>
+<button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-web3-purple to-web3-blue rounded-lg font-semibold hover:shadow-2xl hover:shadow-web3-purple/50 transition-all transform hover:-translate-y-1">
+<i class="fas fa-paper-plane mr-2"></i>ส่งข้อความ
+</button>
+</form>
+</div>
+<div class="mt-12 pt-8 border-t border-web3-purple/20">
+<p class="text-center text-gray-400 mb-6">หรือติดต่อผ่านช่องทางอื่น</p>
+<div class="flex justify-center gap-6">
+<a href="https://github.com/K1ts4k0n" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-purple/30 hover:border-web3-purple hover:scale-110 transition-all">
+<i class="fab fa-github text-2xl text-gray-400 group-hover:text-web3-purple transition-colors"></i>
+</a>
+<a href="https://www.linkedin.com/in/artkung" target="_blank" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-blue/30 hover:border-web3-blue hover:scale-110 transition-all">
+<i class="fab fa-linkedin text-2xl text-gray-400 group-hover:text-web3-blue transition-colors"></i>
+</a>
+<a href="mailto:artkung.dev@gmail.com" class="group w-14 h-14 glass-effect rounded-xl flex items-center justify-center border border-web3-cyan/30 hover:border-web3-cyan hover:scale-110 transition-all">
+<i class="fas fa-envelope text-2xl text-gray-400 group-hover:text-web3-cyan transition-colors"></i>
+</a>
+</div>
+</div>
+</div>
+</section>
+<footer class="relative py-12 border-t border-web3-purple/20 z-10">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-center md:text-left">
+<div class="text-2xl font-bold gradient-text font-mono mb-2">&lt;Artkung/&gt;</div>
+<p class="text-gray-500 text-sm">Building the Decentralized Future</p>
+</div>
+<div class="flex gap-8 text-sm text-gray-500">
+<a href="#home" class="hover:text-web3-purple">Home</a>
+<a href="#about" class="hover:text-web3-cyan">About</a>
+<a href="#skills" class="hover:text-web3-blue">Skills</a>
+<a href="#projects" class="hover:text-web3-pink">Projects</a>
+<a href="#contact" class="hover:text-web3-purple">Contact</a>
+</div>
+<div class="text-center md:text-right">
+<p class="text-gray-500 text-sm">&copy; <span id="year"></span> Artkung — Web3 Portfolio</p>
+<p class="text-gray-600 text-xs mt-1">Made with <span class="text-web3-purple">❤</span> & <span class="text-web3-cyan">Blockchain</span></p>
+</div>
+</div>
+</footer>
+<script>
+// ===== MATRIX RAIN =====
+const matrixCanvas = document.getElementById('matrix-canvas');
+const matrixCtx = matrixCanvas.getContext('2d');
+const resizeMatrix = () => {
+  matrixCanvas.width = innerWidth;
+  matrixCanvas.height = innerHeight;
+}
+resizeMatrix();
+const matrixChars = 'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن هـ و ي ٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩';
+const fontSize = 14;
+let columns = Math.floor(matrixCanvas.width / fontSize);
+const drops = Array(columns).fill(1);
+const matrixColors = ['#8B5CF6','#3B82F6','#06B6D4','#EC4899','#FB923C','#22C55E'];
+function drawMatrix(){
+  matrixCtx.fillStyle='rgba(17,24,39,0.05)';
+  matrixCtx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
+  matrixCtx.font = fontSize+'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const ch = matrixChars[Math.floor(Math.random()*matrixChars.length)];
+    matrixCtx.fillStyle = matrixColors[i % matrixColors.length];
+    matrixCtx.shadowBlur = 10;
+    matrixCtx.shadowColor = matrixColors[i % matrixColors.length];
+    matrixCtx.fillText(ch,i*fontSize,drops[i]*fontSize);
+    matrixCtx.shadowBlur = 0;
+    if(drops[i]*fontSize>matrixCanvas.height && Math.random()>0.975) drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(drawMatrix,50);
 
-<body class="overflow-x-hidden">
-
-  <!-- canvases -->
-  <canvas id="matrix"></canvas>
-  <canvas id="particles"></canvas>
-  <!-- draw while dragging -->
-  <canvas id="drag"></canvas>
-
-  <!-- subtle grid + vignettes -->
-  <div class="pointer-events-none fixed inset-0 opacity-[.12]" style="
-       background-image:
-         linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-         linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-       background-size:48px 48px;"></div>
-  <div class="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_40%_at_50%_0%,rgba(255,255,255,.08),transparent_60%)]"></div>
-
-  <!-- NAV -->
-  <nav class="fixed top-0 w-full z-50 glass border-b border-[#1f242c]">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#home" class="logo font-mono text-xl md:text-2xl gradient-text">&lt;Artkung/&gt;</a>
-      <ul class="hidden md:flex gap-8 text-[15px]">
-        <li><a class="ring-line text-silver hover:text-silver" href="#home">Home</a></li>
-        <li><a class="ring-line text-silver/80 hover:text-silver" href="#about">About</a></li>
-        <li><a class="ring-line text-silver/80 hover:text-silver" href="#skills">Skills</a></li>
-        <li><a class="ring-line text-silver/80 hover:text-silver" href="#projects">Projects</a></li>
-        <li><a class="ring-line text-silver/80 hover:text-silver" href="#contact">Contact</a></li>
-      </ul>
-      <a href="mailto:artkung.dev@gmail.com"
-         class="hidden sm:inline-block px-5 py-2 rounded-lg font-semibold glass hover:animate-glow transition">
-        Say Hi
-      </a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="home" class="min-h-screen flex items-center pt-24">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-      <div class="space-y-6 animate-slide">
-        <span class="glass inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full border border-[#2a323d]">
-          <i class="fa-solid fa-circle text-green-400 text-[8px] animate-pulse"></i>
-          Available for Web3 Projects
-        </span>
-
-        <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-          สวัสดี, ผม Artkung
-          <span class="gradient-text block mt-2 typing">Web3 Developer</span>
-        </h1>
-
-        <p class="text-slate/90 text-lg">
-          สร้าง DApps และ Smart Contracts บน Ethereum/Polygon/BNB
-          โฟกัสความปลอดภัย ประสบการณ์ใช้งานลื่นไหล และโค้ดคุณภาพ
-        </p>
-
-        <div class="flex flex-wrap gap-4">
-          <a href="#projects" class="px-7 py-3 glass rounded-lg font-semibold border border-[#2a323d] hover:bg-white/5 transition">
-            ดูผลงาน <i class="fa-solid fa-arrow-right ml-2"></i>
-          </a>
-          <a href="#contact" class="px-7 py-3 rounded-lg font-semibold"
-             style="background:linear-gradient(90deg,var(--accent1),var(--accent3))">
-            ติดต่อ
-          </a>
-        </div>
-
-        <!-- stats -->
-        <div class="grid grid-cols-3 gap-6 pt-4">
-          <div class="text-center"><div class="text-3xl font-bold gradient-text">5+</div><div class="text-slate">Years</div></div>
-          <div class="text-center"><div class="text-3xl font-bold gradient-text">50+</div><div class="text-slate">Projects</div></div>
-          <div class="text-center"><div class="text-3xl font-bold gradient-text">30+</div><div class="text-slate">Clients</div></div>
-        </div>
-      </div>
-
-      <!-- terminal card -->
-      <div class="relative animate-float">
-        <div class="absolute -top-10 -left-10 w-28 h-28 rounded-full blur-2xl bg-white/10"></div>
-        <div class="absolute -bottom-10 -right-10 w-36 h-36 rounded-full blur-2xl bg-white/10"></div>
-
-        <div class="glass rounded-2xl p-7 border border-[#2a323d] tilt">
-          <div class="flex items-center gap-2 mb-5 pb-4 border-b border-[#2a323d]">
-            <span class="w-3 h-3 rounded-full bg-red-500"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span class="w-3 h-3 rounded-full bg-green-500"></span>
-            <span class="ml-3 text-xs text-slate font-mono">web3-terminal.sol</span>
-          </div>
-
-          <div class="font-mono text-sm leading-7">
-            <span class="text-slate">// Blockchain Expertise</span><br/>
-            <span class="text-slate">contract</span> <span class="text-silver">Developer</span> {<br/>
-            &nbsp;&nbsp;string name = "<span class="text-silver">Artkung</span>";<br/>
-            &nbsp;&nbsp;string[] skills = ["Solidity","Ethers.js","Smart Contracts"];<br/>
-            &nbsp;&nbsp;function build() public returns (string){ return "DApps"; }<br/>
-            }
-          </div>
-
-          <div class="flex gap-3 mt-6 pt-5 border-t border-[#2a323d]">
-            <a class="glass w-10 h-10 rounded-lg flex items-center justify-center hover:scale-110 transition" href="https://github.com/K1ts4k0n" target="_blank"><i class="fab fa-github"></i></a>
-            <a class="glass w-10 h-10 rounded-lg flex items-center justify-center hover:scale-110 transition" href="https://www.linkedin.com/in/artkung" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a class="glass w-10 h-10 rounded-lg flex items-center justify-center hover:scale-110 transition" href="mailto:artkung.dev@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="py-28">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <h2 class="text-4xl font-bold"><span class="gradient-text">เกี่ยวกับผม</span></h2>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="relative">
-          <div class="relative w-72 h-72 mx-auto">
-            <div class="absolute inset-0 rounded-2xl bg-white/5 animate-pulse"></div>
-            <div class="absolute inset-3 rounded-2xl glass flex items-center justify-center">
-              <i class="fa-solid fa-user-astronaut text-7xl gradient-text"></i>
-            </div>
-          </div>
-        </div>
-        <div class="space-y-5">
-          <div class="glass p-6 rounded-2xl border border-[#2a323d] tilt">
-            <h3 class="text-xl font-semibold mb-2">Blockchain Developer</h3>
-            <p class="text-slate/90">ถนัด DApps / Smart Contracts (Ethereum, Polygon) ให้ความสำคัญกับความปลอดภัย การทดสอบ และคุณภาพโค้ด</p>
-          </div>
-          <div class="glass p-6 rounded-2xl border border-[#2a323d] tilt">
-            <h3 class="text-xl font-semibold mb-2">Full-Stack</h3>
-            <p class="text-slate/90">Frontend (React/Next.js) + Backend (Node.js) + DevOps (GitHub Actions)</p>
-          </div>
-          <div class="glass p-6 rounded-2xl border border-[#2a323d] tilt">
-            <h3 class="text-xl font-semibold mb-2">Innovation</h3>
-            <p class="text-slate/90">สนใจ NFTs, DeFi, DAOs และประสบการณ์ผู้ใช้ที่ดี</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="py-28 bg-[rgba(255,255,255,.02)]">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <h2 class="text-4xl font-bold"><span class="gradient-text">ทักษะ & เทคโนโลยี</span></h2>
-        <p class="text-slate mt-3">เครื่องมือที่ใช้สร้าง Web3 Apps</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-7">
-        <div class="glass p-7 rounded-2xl border border-[#2a323d] tilt">
-          <h3 class="font-semibold mb-4">Blockchain & Web3</h3>
-          <ul class="space-y-2 text-slate/90">
-            <li>Solidity, OpenZeppelin</li>
-            <li>Ethers.js / Web3.js</li>
-            <li>Hardhat, Foundry</li>
-            <li>IPFS / Pinata</li>
-            <li>ERC-20 / 721 / 1155</li>
-          </ul>
-        </div>
-        <div class="glass p-7 rounded-2xl border border-[#2a323d] tilt">
-          <h3 class="font-semibold mb-4">Frontend</h3>
-          <ul class="space-y-2 text-slate/90">
-            <li>React / Next.js / TypeScript</li>
-            <li>Tailwind / Framer Motion</li>
-            <li>Three.js / WebGL (พื้นฐาน)</li>
-            <li>Responsive / Accessibility</li>
-          </ul>
-        </div>
-        <div class="glass p-7 rounded-2xl border border-[#2a323d] tilt">
-          <h3 class="font-semibold mb-4">Backend & DevOps</h3>
-          <ul class="space-y-2 text-slate/90">
-            <li>Node.js / Express</li>
-            <li>MongoDB / PostgreSQL</li>
-            <li>GraphQL / REST</li>
-            <li>Docker (พื้นฐาน) / GitHub Actions</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS (linked to your repos) -->
-  <section id="projects" class="py-28">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <h2 class="text-4xl font-bold"><span class="gradient-text">Featured Projects</span></h2>
-        <p class="text-slate mt-3">เชื่อมลิงก์ไปยังงานจริงบน GitHub/Live (แก้เป็นของจริงได้ทันที)</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-        <!-- card template -->
-        <template id="proj">
-          <div class="group glass rounded-2xl overflow-hidden border border-[#2a323d] hover:animate-glow tilt">
-            <div class="h-44 bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center">
-              <i class="fa-regular fa-image text-5xl text-silver/60"></i>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2 title"></h3>
-              <p class="text-slate/90 mb-4 desc"></p>
-              <div class="flex gap-4">
-                <a class="code text-silver/80 hover:text-silver ring-line" target="_blank"><i class="fab fa-github mr-2"></i>Code</a>
-                <a class="live text-silver/80 hover:text-silver ring-line" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>Live</a>
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <div id="proj-grid" class="contents"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="py-28 bg-[rgba(255,255,255,.02)]">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="text-center mb-10">
-        <h2 class="text-4xl font-bold"><span class="gradient-text">Let's Connect</span></h2>
-      </div>
-
-      <form class="glass p-8 md:p-10 rounded-2xl border border-[#2a323d] max-w-3xl mx-auto space-y-5">
-        <div class="grid md:grid-cols-2 gap-5">
-          <input class="glass px-4 py-3 rounded-lg border border-[#2a323d] focus:outline-none" placeholder="ชื่อ"/>
-          <input type="email" class="glass px-4 py-3 rounded-lg border border-[#2a323d] focus:outline-none" placeholder="อีเมล"/>
-        </div>
-        <input class="glass px-4 py-3 rounded-lg w-full border border-[#2a323d] focus:outline-none" placeholder="หัวข้อ"/>
-        <textarea rows="6" class="glass px-4 py-3 rounded-lg w-full border border-[#2a323d] focus:outline-none" placeholder="ข้อความ..."></textarea>
-        <button class="px-7 py-3 rounded-lg font-semibold self-start" style="background:linear-gradient(90deg,var(--accent1),var(--accent3))">
-          ส่งข้อความ
-        </button>
-      </form>
-
-      <div class="mt-10 flex justify-center gap-5">
-        <a href="https://github.com/K1ts4k0n" class="glass w-12 h-12 rounded-xl flex items-center justify-center border border-[#2a323d] hover:scale-110 transition" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/artkung" class="glass w-12 h-12 rounded-xl flex items-center justify-center border border-[#2a323d] hover:scale-110 transition" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="mailto:artkung.dev@gmail.com" class="glass w-12 h-12 rounded-xl flex items-center justify-center border border-[#2a323d] hover:scale-110 transition"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="py-10 border-t border-[#1f242c]">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-slate">
-      <div class="font-mono gradient-text text-xl">&lt;Artkung/&gt;</div>
-      <div class="flex gap-6 text-sm">
-        <a href="#home" class="ring-line">Home</a><a href="#about" class="ring-line">About</a>
-        <a href="#skills" class="ring-line">Skills</a><a href="#projects" class="ring-line">Projects</a>
-        <a href="#contact" class="ring-line">Contact</a>
-      </div>
-      <div class="text-sm">&copy; <span id="year"></span> Artkung — Web3 Portfolio</div>
-    </div>
-  </footer>
-
-  <script>
-  // ===== Utils =====
-  const $ = s => document.querySelector(s); const $$ = s => document.querySelectorAll(s);
-
-  // ===== Year =====
-  $('#year').textContent = new Date().getFullYear();
-
-  // ===== Smooth scroll =====
-  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-    e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(!t) return;
-    t.scrollIntoView({behavior:'smooth', block:'start'});
-  }));
-
-  // ===== Navbar shadow =====
-  const nav = document.querySelector('nav');
-  addEventListener('scroll',()=>{ nav.style.background = (scrollY>80) ? 'rgba(12,13,15,.92)':'rgba(18,19,23,.72)'; });
-
-  // ===== Tilt (mousemove) =====
-  $$('.tilt').forEach(el=>{
-    el.addEventListener('mousemove',e=>{
-      const r = el.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
-      el.style.setProperty('--rx', (y-r.height/2)/12+'deg');
-      el.style.setProperty('--ry', (r.width/2-x)/12+'deg');
-    });
-    el.addEventListener('mouseleave',()=>{ el.style.setProperty('--rx','0deg'); el.style.setProperty('--ry','0deg'); });
-  });
-
-  // ===== Typing =====
-  const typing = document.querySelector('.typing');
-  if(typing){ const txt='Web3 Developer'; typing.textContent=''; let i=0; (function type(){ if(i<txt.length){ typing.textContent+=txt[i++]; setTimeout(type,110);} })(); }
-
-  // ===== Matrix (Arabic / gray) =====
-  const mc = document.getElementById('matrix'), mctx = mc.getContext('2d');
-  function resizeMatrix(){ mc.width=innerWidth; mc.height=innerHeight; cols=Math.floor(mc.width / fs); drops = Array(cols).fill(1); }
-  const chars='ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن هـ و ي ٠١٢٣٤٥٦٧٨٩';
-  const fs=14; let cols=0, drops=[];
-  resizeMatrix();
-  function drawM(){
-    mctx.fillStyle='rgba(12,13,15,0.06)'; mctx.fillRect(0,0,mc.width,mc.height);
-    mctx.fillStyle='#9ca3af'; mctx.font=fs+'px monospace';
-    for(let i=0;i<drops.length;i++){
-      const ch = chars[Math.floor(Math.random()*chars.length)];
-      mctx.fillText(ch,i*fs,drops[i]*fs);
-      if(drops[i]*fs>mc.height && Math.random()>0.975) drops[i]=0; drops[i]++;
+// ===== PARTICLES =====
+const particlesCanvas = document.getElementById('particles-canvas');
+const particlesCtx = particlesCanvas.getContext('2d');
+const resizeParticles = () => {
+  particlesCanvas.width = innerWidth;
+  particlesCanvas.height = innerHeight;
+}
+resizeParticles();
+class Particle{
+  constructor(){
+    this.x=Math.random()*particlesCanvas.width;
+    this.y=Math.random()*particlesCanvas.height;
+    this.size=Math.random()*3+1;
+    this.vx=Math.random()*0.5-0.25;
+    this.vy=Math.random()*0.5-0.25;
+    const colors = [
+      {fill:'#8B5CF6',glow:'rgba(139,92,246,0.8)'},
+      {fill:'#3B82F6',glow:'rgba(59,130,246,0.8)'},
+      {fill:'#06B6D4',glow:'rgba(6,182,212,0.8)'},
+      {fill:'#EC4899',glow:'rgba(236,72,153,0.8)'},
+      {fill:'#FB923C',glow:'rgba(251,146,60,0.8)'},
+      {fill:'#22C55E',glow:'rgba(34,197,94,0.8)'}
+    ];
+    this.colorObj = colors[Math.floor(Math.random()*colors.length)];
+  }
+  update(){
+    this.x+=this.vx;
+    this.y+=this.vy;
+    if(this.x>particlesCanvas.width)this.x=0;
+    if(this.x<0)this.x=particlesCanvas.width;
+    if(this.y>particlesCanvas.height)this.y=0;
+    if(this.y<0)this.y=particlesCanvas.height;
+  }
+  draw(){
+    particlesCtx.shadowBlur=15;
+    particlesCtx.shadowColor=this.colorObj.glow;
+    particlesCtx.fillStyle=this.colorObj.fill;
+    particlesCtx.beginPath();
+    particlesCtx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    particlesCtx.fill();
+    particlesCtx.shadowBlur=0;
+  }
+}
+const particles = Array.from({length:100},()=>new Particle());
+function animateParticles(){
+  particlesCtx.clearRect(0,0,particlesCanvas.width,particlesCanvas.height);
+  particles.forEach(p=>{p.update(); p.draw();});
+  particles.forEach((a,i)=>particles.slice(i+1).forEach(b=>{
+    const dx=a.x-b.x, dy=a.y-b.y, dist=Math.hypot(dx,dy);
+    if(dist<120){
+      const gradient = particlesCtx.createLinearGradient(a.x,a.y,b.x,b.y);
+      gradient.addColorStop(0,a.colorObj.glow);
+      gradient.addColorStop(1,b.colorObj.glow);
+      particlesCtx.strokeStyle=gradient;
+      particlesCtx.lineWidth=0.8;
+      particlesCtx.globalAlpha=(1-dist/120)*0.6;
+      particlesCtx.beginPath();
+      particlesCtx.moveTo(a.x,a.y);
+      particlesCtx.lineTo(b.x,b.y);
+      particlesCtx.stroke();
+      particlesCtx.globalAlpha=1;
     }
-  }
-  setInterval(drawM,50);
+  }));
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
 
-  // ===== Particles (gray) =====
-  const pc = document.getElementById('particles'), pctx = pc.getContext('2d');
-  function resizeP(){ pc.width=innerWidth; pc.height=innerHeight; }
-  resizeP();
-  class Particle{
-    constructor(){ this.x=Math.random()*pc.width; this.y=Math.random()*pc.height; this.r=Math.random()*2+1;
-      this.vx=Math.random()*.5-.25; this.vy=Math.random()*.5-.25; this.c=['#e5e7eb','#9ca3af','#6b7280'][Math.floor(Math.random()*3)]; }
-    update(){ this.x+=this.vx; this.y+=this.vy; if(this.x>pc.width)this.x=0; if(this.x<0)this.x=pc.width; if(this.y>pc.height)this.y=0; if(this.y<0)this.y=pc.height; }
-    draw(){ pctx.fillStyle=this.c; pctx.beginPath(); pctx.arc(this.x,this.y,this.r,0,Math.PI*2); pctx.fill(); }
+// ===== MOUSE TRAIL =====
+const trailContainer = document.getElementById('mouse-trail-container');
+const trails = [];
+const maxTrails = 20;
+const trailColors = ['mouse-trail-1', 'mouse-trail-2', 'mouse-trail-3', 'mouse-trail-4', 'mouse-trail-5', 'mouse-trail-6'];
+for(let i=0; i<maxTrails; i++){
+  const trail = document.createElement('div');
+  trail.className = `mouse-trail ${trailColors[i % trailColors.length]}`;
+  trail.style.opacity = (1 - i/maxTrails) * 0.7;
+  trail.style.transform = `scale(${1 - i/maxTrails})`;
+  trailContainer.appendChild(trail);
+  trails.push(trail);
+}
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  trails.forEach((trail, i) => {
+    setTimeout(() => {
+      trail.style.left = mouseX - 10 + 'px';
+      trail.style.top = mouseY - 10 + 'px';
+    }, i * 15);
+  });
+});
+
+// ===== RIPPLE EFFECT =====
+const rippleColors = [
+  'rgba(139,92,246,0.4)',
+  'rgba(59,130,246,0.4)',
+  'rgba(6,182,212,0.4)',
+  'rgba(236,72,153,0.4)',
+  'rgba(251,146,60,0.4)',
+  'rgba(34,197,94,0.4)'
+];
+let rippleColorIndex = 0;
+document.addEventListener('click', e => {
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple';
+  ripple.style.left = e.clientX - 50 + 'px';
+  ripple.style.top = e.clientY - 50 + 'px';
+  ripple.style.width = '100px';
+  ripple.style.height = '100px';
+  ripple.style.background = rippleColors[rippleColorIndex];
+  ripple.style.boxShadow = `0 0 30px ${rippleColors[rippleColorIndex]}`;
+  rippleColorIndex = (rippleColorIndex + 1) % rippleColors.length;
+  document.body.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+});
+
+// ===== SCROLL PROGRESS =====
+const scrollProgress = document.getElementById('scroll-progress');
+addEventListener('scroll', () => {
+  const scrolled = (scrollY / (document.documentElement.scrollHeight - innerHeight)) * 100;
+  scrollProgress.style.width = scrolled + '%';
+});
+
+// ===== PARALLAX =====
+addEventListener('scroll', () => {
+  const s = scrollY;
+  document.querySelectorAll('.parallax-layer').forEach((el, i) => {
+    const speed = parseFloat(el.dataset.speed) || 0.5;
+    el.style.transform = `translateY(${s * speed}px)`;
+  });
+});
+
+// ===== TILT CARDS =====
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const rx = (y - r.height/2) / 10;
+    const ry = (r.width/2 - x) / 10;
+    card.style.setProperty('--rotate-x', `${rx}deg`);
+    card.style.setProperty('--rotate-y', `${ry}deg`);
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--rotate-x', '0deg');
+    card.style.setProperty('--rotate-y', '0deg');
+  });
+});
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  const el = document.querySelector(a.getAttribute('href'));
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}));
+
+// ===== NAVBAR =====
+const nav = document.querySelector('nav');
+addEventListener('scroll', () => {
+  if(scrollY > 100){
+    nav.classList.add('shadow-lg','shadow-web3-purple/10');
+    nav.style.background = 'rgba(31,41,55,0.98)';
+  } else {
+    nav.classList.remove('shadow-lg','shadow-web3-purple/10');
+    nav.style.background = 'rgba(31,41,55,0.7)';
   }
-  const ps = Array.from({length:100},()=>new Particle());
-  (function loop(){
-    pctx.clearRect(0,0,pc.width,pc.height);
-    ps.forEach(p=>{p.update(); p.draw();});
-    // lines
-    ps.forEach((a,i)=>ps.slice(i+1).forEach(b=>{
-      const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-      if(d<100){ pctx.strokeStyle=`rgba(229,231,235,${1-d/100})`; pctx.lineWidth=.5; pctx.beginPath(); pctx.moveTo(a.x,a.y); pctx.lineTo(b.x,b.y); pctx.stroke(); }
-    }));
-    requestAnimationFrame(loop);
+});
+
+// ===== TYPING EFFECT =====
+const typing = document.querySelector('.typing-cursor');
+if(typing){
+  const text = 'Web3 Developer';
+  typing.textContent = '';
+  let i = 0;
+  (function type(){
+    if(i < text.length){
+      typing.textContent += text[i++];
+      setTimeout(type, 120);
+    }
   })();
+}
 
-  // ===== Drag Draw Effect (เส้นแสงตอน "ลาก") =====
-  const dc = document.getElementById('drag'), dctx = dc.getContext('2d'); let drawing=false, prev=null;
-  function resizeD(){ dc.width=innerWidth; dc.height=innerHeight; dctx.lineCap='round'; dctx.lineJoin='round'; }
-  resizeD();
-  const fade = ()=>{ dctx.fillStyle='rgba(12,13,15,0.08)'; dctx.fillRect(0,0,dc.width,dc.height); requestAnimationFrame(fade); }; fade();
-  window.addEventListener('mousedown',e=>{ drawing=true; prev=[e.clientX,e.clientY]; });
-  window.addEventListener('mouseup',()=> drawing=false);
-  window.addEventListener('mouseleave',()=> drawing=false);
-  window.addEventListener('mousemove',e=>{
-    if(!drawing) return;
-    const [px,py]=prev; const x=e.clientX,y=e.clientY;
-    dctx.strokeStyle='rgba(229,231,235,.35)'; dctx.lineWidth=3;
-    dctx.globalCompositeOperation='lighter';
-    dctx.beginPath(); dctx.moveTo(px,py); dctx.lineTo(x,y); dctx.stroke();
-    prev=[x,y];
-  });
+// ===== LOGO SHAKE =====
+const style = document.createElement('style');
+style.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-5px)}20%,40%,60%,80%{transform:translateX(5px)}}`;
+document.head.appendChild(style);
+document.querySelector('.logo').addEventListener('mouseenter', function(){
+  this.style.animation = 'shake .5s';
+  setTimeout(() => this.style.animation = '', 500);
+});
 
-  // ===== Projects data (เชื่อมกับงาน) =====
-  const projects = [
-    {t:'NFT Marketplace', d:'แพลตฟอร์มซื้อขาย NFT พร้อม Auction & Royalty',
-     code:'https://github.com/K1ts4k0n/nft-marketplace', live:'https://k1ts4k0n.github.io/nft-marketplace/'},
-    {t:'DeFi Staking Protocol', d:'โปรโตคอล Staking/Yield Farming + Governance',
-     code:'https://github.com/K1ts4k0n/defi-staking', live:'https://k1ts4k0n.github.io/defi-staking/'},
-    {t:'DAO Platform', d:'ระบบโหวต/บริหาร DAO แบบกระจายศูนย์',
-     code:'https://github.com/K1ts4k0n/dao-platform', live:'https://k1ts4k0n.github.io/dao-platform/'},
-    {t:'Multi-Chain Wallet', d:'กระเป๋าเงินรองรับหลายเชน + DApp Browser',
-     code:'https://github.com/K1ts4k0n/multichain-wallet', live:'https://k1ts4k0n.github.io/multichain-wallet/'},
-    {t:'Metaverse Land', d:'Virtual Land + 3D Visualization',
-     code:'https://github.com/K1ts4k0n/metaverse-land', live:'https://k1ts4k0n.github.io/metaverse-land/'},
-    {t:'Token Launchpad', d:'แพลตฟอร์ม IDO / Fair Launch',
-     code:'https://github.com/K1ts4k0n/token-launchpad', live:'https://k1ts4k0n.github.io/token-launchpad/'},
-  ];
-  const grid = document.getElementById('proj-grid'), tpl = document.getElementById('proj').content;
-  projects.forEach(p=>{
-    const n = tpl.cloneNode(true);
-    n.querySelector('.title').textContent = p.t;
-    n.querySelector('.desc').textContent  = p.d;
-    n.querySelector('.code').href = p.code;
-    n.querySelector('.live').href = p.live;
-    grid.appendChild(n);
-  });
+// ===== RESIZE =====
+addEventListener('resize', () => {
+  resizeMatrix();
+  resizeParticles();
+  columns = Math.floor(matrixCanvas.width/fontSize);
+});
 
-  // ===== Resize all canvases =====
-  addEventListener('resize',()=>{ resizeMatrix(); resizeP(); resizeD(); });
-
-  // ===== Logo shake (เล็ก ๆ เวลา hover) =====
-  const style=document.createElement('style'); style.textContent='@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}'; document.head.appendChild(style);
-  document.querySelector('.logo').addEventListener('mouseenter',function(){ this.style.animation='shake .45s'; setTimeout(()=>this.style.animation='',450); });
-  </script>
+// ===== YEAR =====
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
