@@ -9,80 +9,79 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b0f14;
-      --bg-2:#0c1118;
-      --primary:#00ffa8;
-      --primary-2:#00c2ff;
-      --text:#e6fff5;
-      --muted:#9fb3ad;
-      --border:#1b2637;
-      --shadow:0 20px 40px rgba(0,0,0,.35);
-      --radius:22px;
+      --bg:#0b0f14; --bg-2:#0c1118;
+      --primary:#00ffa8; --primary-2:#00c2ff;
+      --text:#e6fff5; --muted:#9fb3ad; --border:#1b2637;
+      --shadow:0 20px 40px rgba(0,0,0,.35); --radius:22px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
     body{
       background:linear-gradient(180deg,var(--bg),var(--bg-2));
-      color:var(--text);
-      font-family:'Inter',sans-serif;
-      overflow-x:hidden;
+      color:var(--text); font-family:'Inter',sans-serif; overflow-x:hidden;
     }
     a{text-decoration:none;color:var(--text)}
 
-    /* Navbar */
-    nav{
-      width:100%;
-      background:#0e131b;
-      border-bottom:1px solid var(--border);
-      box-shadow:0 4px 20px rgba(0,0,0,.2);
-      position:fixed;
-      top:0;
-      left:0;
-      z-index:999;
-    }
-    .nav-container{
-      max-width:1100px;
-      margin:0 auto;
-      padding:16px 20px;
-      display:flex;
-      justify-content:center;
-      gap:40px;
-    }
-    .nav-container a{
-      font-weight:600;
-      position:relative;
-      transition:color .2s ease;
-    }
-    .nav-container a::after{
-      content:'';
-      position:absolute;
-      left:0;
-      bottom:-4px;
-      width:0;
-      height:2px;
-      background:linear-gradient(90deg,var(--primary),var(--primary-2));
-      transition:width .3s ease;
-    }
-    .nav-container a:hover{
-      color:var(--primary);
-    }
-    .nav-container a:hover::after{
-      width:100%;
-    }
+    /* ===== Navbar ===== */
+    nav{width:100%; background:#0e131b; border-bottom:1px solid var(--border); box-shadow:0 4px 20px rgba(0,0,0,.2); position:fixed; top:0; left:0; z-index:999}
+    .nav-container{max-width:1100px; margin:0 auto; padding:16px 20px; display:flex; justify-content:center; gap:40px}
+    .nav-container a{font-weight:600; position:relative; transition:color .2s ease}
+    .nav-container a::after{content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:linear-gradient(90deg,var(--primary),var(--primary-2)); transition:width .25s ease}
+    .nav-container a:hover{color:var(--primary)}
+    .nav-container a:hover::after{width:100%}
+    .nav-container a.active{color:var(--primary)}
+    .nav-container a.active::after{width:100%}
 
-    .container{max-width:1100px;margin:120px auto;padding:0 20px;text-align:center}
+    /* ===== Layout / Sections ===== */
+    #matrix{position:fixed; inset:0; z-index:-2; opacity:.18}
+    .cursor{position:fixed; left:0; top:0; width:22px; height:22px; border:2px solid var(--primary); border-radius:50%; pointer-events:none; transform:translate(-50%,-50%); z-index:1000; mix-blend-mode:screen; box-shadow:0 0 30px rgba(0,255,168,.35)}
 
-    h1{font-size:3rem;margin-bottom:10px}
-    p{font-size:1.2rem;color:var(--muted)}
+    .container{max-width:1100px; margin:120px auto 0; padding:0 20px}
+    section{padding:90px 0; scroll-margin-top:90px}
 
-    #matrix{position:fixed;inset:0;z-index:-1;opacity:.18}
+    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    .card{background:rgba(15,23,34,.82); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .hero-card{padding:28px; text-align:left}
+
+    h1{font-size:clamp(2.2rem, 5vw, 3.4rem); margin:.2rem 0 1rem; line-height:1.05}
+    .gradient{background:linear-gradient(90deg,var(--primary),var(--primary-2)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 18px rgba(0,255,168,.25))}
+    .subtitle{color:var(--muted); font-size:1.05rem; margin:.2rem 0 1.2rem}
+
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+    .chip{display:inline-flex; align-items:center; gap:.5rem; padding:8px 14px; border:1px solid var(--border); border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); backdrop-filter: blur(8px)}
+    .buttons{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .btn{position:relative; padding:12px 16px; border-radius:14px; border:1px solid var(--border); color:var(--text); display:inline-flex; align-items:center; gap:.6rem; font-weight:600; transition:transform .12s ease, box-shadow .2s}
+    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,255,168,.12)}
+    .btn.primary{border-color:transparent; background:linear-gradient(90deg,var(--primary),var(--primary-2)); color:#07140f}
+
+    .avatar{aspect-ratio:1/1; border-radius:20px; overflow:hidden; border:1px solid var(--border)}
+    .avatar img{display:block; width:100%; height:100%; object-fit:cover}
+
+    /* Projects */
+    h2{margin-bottom:18px; font-size:1.6rem}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    .project{position:relative; overflow:hidden; transform:translateY(12px); opacity:0; transition:transform .5s ease, opacity .5s ease}
+    .project.reveal{transform:translateY(0); opacity:1}
+    .project .cover{height:140px; background:linear-gradient(120deg, rgba(0,255,168,.16), rgba(0,194,255,.16)); border-bottom:1px solid var(--border)}
+    .project .inner{padding:16px}
+    .project h3{margin:0 0 8px; font-size:1.05rem}
+    .project p{margin:0; color:var(--muted); font-size:.95rem}
+    .project:hover{transform:translateY(-4px); box-shadow:0 16px 50px rgba(0,255,168,.08)}
+
+    /* Footer */
+    .footer{margin:40px 0 80px; text-align:center; color:var(--muted)}
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
-  
+  <div class="cursor" id="cursor"></div>
+
   <nav>
-    <div class="nav-container">
-      <a href="#home">Home</a>
+    <div class="nav-container" id="nav">
+      <a href="#home" class="active">Home</a>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -90,17 +89,77 @@
     </div>
   </nav>
 
-  <div class="container" id="home">
-    <h1>Hi, I'm K1ts4k0n 👋</h1>
-    <p>Welcome to my Portfolio Website</p>
+  <div class="container">
+    <!-- Home / Hero -->
+    <section id="home" class="hero">
+      <div class="card hero-card">
+        <span class="chip">$ whoami — <strong>Artkung</strong> <span style="opacity:.6">(K1ts4k0n)</span></span>
+        <h1>Building <span class="gradient">useful things</span> on the web<span class="blink">_</span></h1>
+        <div class="subtitle">Full‑stack developer who loves <span class="type" id="type">React · Node · TS</span></div>
+        <div class="badges">
+          <span class="chip">React</span><span class="chip">Node.js</span><span class="chip">TypeScript</span>
+          <span class="chip">MySQL</span><span class="chip">Docker</span><span class="chip">AI/ML</span>
+        </div>
+        <div class="buttons">
+          <a class="btn primary" href="https://github.com/K1ts4k0n" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/artkung" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="mailto:artkung.dev@gmail.com">Email</a>
+        </div>
+      </div>
+      <div class="card avatar">
+        <img src="https://avatars.githubusercontent.com/u/9919?s=400&v=4" alt="avatar" />
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h2>About</h2>
+      <p class="subtitle">I build clean backends and sleek frontends. Passionate about automation, DX, and delightful UX.</p>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="badges">
+        <span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Python</span>
+        <span class="chip">C#</span><span class="chip">SQL</span><span class="chip">Docker</span>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid" id="projectGrid">
+        <a class="card project" href="https://github.com/K1ts4k0n/car-rental-system" target="_blank" rel="noreferrer">
+          <div class="cover"></div>
+          <div class="inner"><h3>Car Rental System</h3><p>CRUD + Auth + Dashboard • React · Node · MySQL</p></div>
+        </a>
+        <a class="card project" href="https://github.com/K1ts4k0n/ml-lab-pack" target="_blank" rel="noreferrer">
+          <div class="cover"></div>
+          <div class="inner"><h3>ML Lab Pack</h3><p>KNN, KMeans, ANN, ROC • Python · scikit‑learn</p></div>
+        </a>
+        <a class="card project" href="https://github.com/K1ts4k0n/trading-tools" target="_blank" rel="noreferrer">
+          <div class="cover"></div>
+          <div class="inner"><h3>Trading Tools</h3><p>News & XAUUSD helpers • Python · APIs</p></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="subtitle">Reach me at <a href="mailto:artkung.dev@gmail.com">artkung.dev@gmail.com</a></p>
+    </section>
+
+    <div class="footer">© <span id="year"></span> Artkung · Built on <span style="color:var(--primary)">GitHub Pages</span></div>
   </div>
 
   <script>
+    /* ===== Matrix Rain (Arabic) ===== */
     const c = document.getElementById('matrix');
     const ctx = c.getContext('2d');
-    let w = c.width = window.innerWidth;
-    let h = c.height = window.innerHeight;
-    let font = 16; let columns = Math.floor(w / font);
+    let w = c.width = window.innerWidth, h = c.height = window.innerHeight;
+    const font = 16; let columns = Math.floor(w / font);
     const drops = Array.from({length: columns}, () => Math.random()*h/font);
     const chars = 'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن هـ و ي ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ ٠';
     function draw(){
@@ -110,13 +169,60 @@
       ctx.font = font + 'px JetBrains Mono, monospace';
       for(let i=0;i<drops.length;i++){
         const text = chars.charAt(Math.floor(Math.random()*chars.length));
-        ctx.fillText(text,i*font,drops[i]*font);
+        ctx.fillText(text, i*font, drops[i]*font);
         if(drops[i]*font>h && Math.random()>0.975){drops[i]=0}else{drops[i]++}
       }
       requestAnimationFrame(draw);
     }
     draw();
-    window.addEventListener('resize',()=>{w=c.width=window.innerWidth;h=c.height=window.innerHeight});
+    window.addEventListener('resize',()=>{ w=c.width=window.innerWidth; h=c.height=window.innerHeight; columns=Math.floor(w/font) })
+
+    /* ===== Smooth scroll with offset & Active Link (ScrollSpy) ===== */
+    const nav = document.getElementById('nav');
+    nav.addEventListener('click', (e)=>{
+      if(e.target.tagName==='A'){
+        e.preventDefault();
+        const id = e.target.getAttribute('href');
+        const el = document.querySelector(id);
+        if(!el) return;
+        const y = el.getBoundingClientRect().top + window.scrollY - 80; // offset for navbar
+        window.scrollTo({top:y, behavior:'smooth'});
+      }
+    });
+    const links = [...nav.querySelectorAll('a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+    const spy = new IntersectionObserver((entries)=>{
+      entries.forEach(en => {
+        if(en.isIntersecting){
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+en.target.id));
+        }
+      })
+    }, {rootMargin:'-50% 0px -40% 0px', threshold:0});
+    sections.forEach(s => s && spy.observe(s));
+
+    /* ===== Cursor glow & magnetic buttons ===== */
+    const cursor = document.getElementById('cursor');
+    window.addEventListener('mousemove', (e)=>{
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+    document.querySelectorAll('.btn').forEach(btn =>{
+      btn.addEventListener('mousemove', (e)=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        btn.style.transform = `translate(${x*0.05}px, ${y*0.08}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform='translate(0,0)'; });
+    });
+
+    /* ===== Reveal on scroll for project cards ===== */
+    const revealObs = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('reveal'); revealObs.unobserve(en.target) } })
+    }, {threshold: .2});
+    document.querySelectorAll('.project').forEach(p=>revealObs.observe(p));
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
